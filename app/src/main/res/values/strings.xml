@@ -14,4 +14,5 @@
     <string name="back_to_homepage">Back to Homepage</string>
     <string name="logout">Logout</string>
     <string name="user">User</string>
+    <string name="log_out">Log Out</string>
 </resources>

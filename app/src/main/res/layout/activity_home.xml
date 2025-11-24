@@ -8,42 +8,37 @@
     tools:context=".Home">
 
     <TextView
-        android:id="@+id/user"
+        android:id="@+id/userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="90dp"
         android:text="User"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/logoutBtn"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:elevation="20dp"/>
 
-    <TextView
-        android:id="@+id/Header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:fontFamily="@font/kaushan_script"
-        android:text="@string/messager"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/user"
-        android:elevation="20dp"/>
 
-    <Button
-        android:id="@+id/logoutBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/logout"
-        app:backgroundTint="@android:color/holo_blue_dark"
-        app:layout_constraintBaseline_toBaselineOf="@+id/user"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/user"
-        android:elevation="20dp"/>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/lightblue"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="Messager">
+
+        <ImageView
+            android:id="@+id/profileIcon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="end"
+            android:padding="6dp"
+            android:src="@drawable/ic_profile"
+            android:layout_marginRight="28dp"/> <!-- use any icon -->
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/userRecyclerView"
@@ -54,5 +49,6 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:listitem="@layout/user_layout"
         app:layout_constraintTop_toTopOf="parent"
-        android:elevation="10dp"/>
+        android:elevation="10dp"
+        android:layout_marginTop="150dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
