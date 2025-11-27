@@ -33,77 +33,68 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_chat)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
 
         val name = intent.getStringExtra("name")
         val receiverUid = intent.getStringExtra("uid")
         val senderUid = FirebaseAuth.getInstance().currentUser?.uid
-        mDbRef = FirebaseDatabase.getInstance().getReference()
 
         senderRoom = receiverUid + senderUid
         receiverRoom = senderUid + receiverUid
 
-        supportActionBar?.title = name // set title to chat partner's name
+        supportActionBar?.title = name
+        mDbRef = FirebaseDatabase.getInstance().reference
+
+        messageList = ArrayList()
+        messageAdapter = MessageAdapter(this, messageList, senderRoom!!, receiverRoom!!)
+        // ↑↑↑ Pass senderRoom & receiverRoom
 
         chatRecyclerView = findViewById(R.id.chatRecyclerView)
         messageBox = findViewById(R.id.messageBox)
         sendButton = findViewById(R.id.sendButton)
-        messageList = ArrayList()
-        messageAdapter = MessageAdapter(this, messageList)
 
         chatRecyclerView.layoutManager = LinearLayoutManager(this)
         chatRecyclerView.adapter = messageAdapter
 
-        // add data to recycler view logic
+        // Load messages
         mDbRef.child("chats").child(senderRoom!!).child("messages")
-            .addValueEventListener(object: ValueEventListener{
+            .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-
                     messageList.clear()
-                    for(postSnapshot in snapshot.children){
-
+                    for (postSnapshot in snapshot.children) {
                         val message = postSnapshot.getValue(Message::class.java)
+                        message?.messageId = postSnapshot.key  // ← CRITICAL: Save messageId!
                         messageList.add(message!!)
-
                     }
                     messageAdapter.notifyDataSetChanged()
-
+                    chatRecyclerView.scrollToPosition(messageList.size - 1)
                 }
 
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-
+                override fun onCancelled(error: DatabaseError) {}
             })
 
-        // send button logic
+        // Send message
         sendButton.setOnClickListener {
-            val message = messageBox.text.toString().trim()
-            val messageObject = Message(message, senderUid)
+            val messageText = messageBox.text.toString().trim()
+            if (messageText.isEmpty()) return@setOnClickListener
 
-            mDbRef.child("chats").child(senderRoom!!).child("messages").push()
-                .setValue(messageObject).addOnSuccessListener {
-                    mDbRef.child("chats").child(receiverRoom!!).child("messages").push()
-                        .setValue(messageObject)
-                }
+            // GENERATE SAME KEY ONCE
+            val newMessageKey = mDbRef.child("chats").child(senderRoom!!).child("messages").push().key!!
+
+            val messageObject = Message(messageText, senderUid, newMessageKey)  // ← Pass messageId
+
+            // Save to BOTH rooms using THE SAME KEY
+            mDbRef.child("chats").child(senderRoom!!).child("messages").child(newMessageKey)
+                .setValue(messageObject)
+
+            mDbRef.child("chats").child(receiverRoom!!).child("messages").child(newMessageKey)
+                .setValue(messageObject)
 
             messageBox.setText("")
-
         }
 
-        val backIcon = findViewById<ImageView>(R.id.backIcon)
-
-        backIcon.setOnClickListener {
-            val intent = Intent(this, Home::class.java)
-            startActivity(intent)
-            finish() // optional, back or none ;3
+        findViewById<ImageView>(R.id.backIcon).setOnClickListener {
+            startActivity(Intent(this, Home::class.java))
+            finish()
         }
-
     }
 }
