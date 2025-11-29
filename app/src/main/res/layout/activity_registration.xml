@@ -88,7 +88,6 @@
 
     <!-- Register Button -->
 
-    <!-- The rest of your views stay the same -->
     <ProgressBar
         android:id="@+id/progressBar"
         android:visibility="gone"
@@ -110,39 +109,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/passwordLayout" />
 
-    <TextView
-        android:id="@+id/orText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/or"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@id/registerBtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="28dp" />
+<!--    <TextView-->
+<!--        android:id="@+id/orText"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/or"-->
+<!--        android:textColor="@android:color/white"-->
+<!--        android:textSize="20sp"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/registerBtn"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:layout_marginTop="28dp" />-->
 
-    <ImageView
-        android:id="@+id/fbIcon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:srcCompat="@drawable/instafb"
-        app:layout_constraintTop_toBottomOf="@id/orText"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="60dp" />
+<!--    <ImageView-->
+<!--        android:id="@+id/fbIcon"-->
+<!--        android:layout_width="40dp"-->
+<!--        android:layout_height="40dp"-->
+<!--        app:srcCompat="@drawable/instafb"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/orText"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginStart="60dp" />-->
 
-    <TextView
-        android:id="@+id/fbText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/log_in_with_facebook"
-        android:textSize="20sp"
-        android:textColor="@android:color/white"
-        app:layout_constraintTop_toTopOf="@id/fbIcon"
-        app:layout_constraintBottom_toBottomOf="@id/fbIcon"
-        app:layout_constraintStart_toEndOf="@id/fbIcon"
-        android:layout_marginStart="12dp" />
+<!--    <TextView-->
+<!--        android:id="@+id/fbText"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/log_in_with_facebook"-->
+<!--        android:textSize="20sp"-->
+<!--        android:textColor="@android:color/white"-->
+<!--        app:layout_constraintTop_toTopOf="@id/fbIcon"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/fbIcon"-->
+<!--        app:layout_constraintStart_toEndOf="@id/fbIcon"-->
+<!--        android:layout_marginStart="12dp" />-->
 
     <Button
         android:id="@+id/backBtn"
@@ -151,9 +150,9 @@
         android:text="@string/back_to_homepage"
         android:textSize="20sp"
         app:backgroundTint="@android:color/holo_blue_dark"
-        app:layout_constraintTop_toBottomOf="@id/fbIcon"
+        app:layout_constraintTop_toBottomOf="@id/registerBtn"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="170dp"
         android:layout_marginStart="40dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
